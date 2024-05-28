@@ -1,25 +1,18 @@
-package com.example.earthshakerapi.controller;
+package com.example.earthquake;
 
-import com.example.earthshakerapi.service.EarthquakeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.ResponseEntity;
 
 @RestController
-@RequestMapping("/api")
 public class EarthquakeController {
 
-    private final EarthquakeService earthquakeService;
-
-    @Autowired
-    public EarthquakeController(EarthquakeService earthquakeService) {
-        this.earthquakeService = earthquakeService;
-    }
-
     @GetMapping("/earthquakes")
-    public Mono<String> getAllEarthquakes() {
-        return this.earthquakeService.getAllEarthquakes();
+    public ResponseEntity<String> getEarthquakes() {
+        String url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02";
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(url, String.class);
+        return ResponseEntity.ok(result);
     }
 }
