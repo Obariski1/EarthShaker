@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "vue-google-maps": "^0.1.21"
+  }
+}
