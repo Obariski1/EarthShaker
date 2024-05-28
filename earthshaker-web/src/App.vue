@@ -1,7 +1,7 @@
 <template>
   <GMapMap
       :center="center"
-      :zoom="7"
+      :zoom="2"
       map-type-id="terrain"
       style="width: 100%; height: 100vh"
   >
@@ -39,6 +39,8 @@ export default {
   },
   methods: {
     processEarthquakeData() {
+      console.log(this.earthquakeData)
+
       if (this.earthquakeData) {
         // Extrahiere die Erdbeben aus den erhaltenen Daten
         const earthquakes = this.earthquakeData.features;
