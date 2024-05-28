@@ -1,4 +1,4 @@
-package com.example.earthquake;
+package com.example.earthshakerapi.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

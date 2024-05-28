@@ -1,6 +1,6 @@
-package com.example.earthquake.service;
+package com.example.earthshakerapi.service;
 
-import com.example.earthquake.model.Earthquake;
+import com.example.earthshakerapi.models.Earthquake;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +16,12 @@ public class EarthquakeService {
     static class EarthquakeResponse {
         private Earthquake[] features;
 
-        // Getter und Setter
+        public Earthquake[] getFeatures() {
+            return features;
+        }
+
+        public void setFeatures(Earthquake[] features) {
+            this.features = features;
+        }
     }
 }
