@@ -3,7 +3,7 @@
     <header>
       <h1 class="title">EarthShaker</h1>
     </header>
-    <h3>Filter</h3>
+    <h2 class="filter-title">Filter</h2>
     <div class="filters">
       <div>
         <h2>Datum</h2>
@@ -36,8 +36,8 @@
         <input class="filter-input" type="text" v-model="placeFilter" placeholder="Stadt eingeben ...">
       </div>
     </div>
-    <div class="map">
-      <GMapMap :center="center" :zoom="2" map-type-id="terrain" style="width: 100%; height: 90vh">
+    <div class="map-box">
+      <GMapMap :center="center" :zoom="2" map-type-id="terrain" class="map">
         <GMapMarker :key="marker.id" v-for="marker in filteredMarkers" :position="marker.position"
           @click="fetchEarthquakeData(marker)" />
         <GMapInfoWindow v-if="selectedMarker" :position="selectedMarker.position" :opened="infoWindowOpened"
@@ -56,11 +56,11 @@
 
     <div class="footer-box">
       <div class="api-info">
-        <p>{{ titleApi }}</p>
+        <p class="title-api">{{ titleApi }}</p>
         <p>Verison Api: {{ verisonApi }} </p>
         <p>Status Api: {{ statusApi }} </p>
       </div>
-      <div class="credits">
+      <div>
         <p>@ Elias Elmer, Giovanni Palermo, Maël Cabon</p>
       </div>
     </div>
@@ -121,7 +121,6 @@ export default {
         console.error('Error fetching earthquake data:', error);
       });
 
-    // Überwache Änderungen im tsunamiFilter und aktualisiere die Komponente
     watch(this.tsunamiFilter, (newVal) => {
       this.$forceUpdate();
     });
@@ -215,11 +214,15 @@ export default {
   font-size: 56px;
 }
 
+.filter-title {
+  font-size: 24px;
+}
+
 .filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   background-color: rgba(231, 231, 231, 0.815);
   padding: 20px;
   border-radius: 15px;
@@ -230,8 +233,13 @@ export default {
   border-radius: 6px;
 }
 
-.map {
+.map-box {
   margin-bottom: 25px;
+}
+
+.map {
+  width: 100%;
+  height: 90vh
 }
 
 .pop-up-title {
@@ -250,5 +258,9 @@ export default {
   background-color: rgba(231, 231, 231, 0.815);
   padding: 20px;
   border-radius: 15px;
+}
+
+.title-api {
+  font-weight: bold;
 }
 </style>
