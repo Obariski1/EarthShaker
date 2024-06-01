@@ -10,5 +10,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/earthquakes").allowedOrigins("http://localhost:5173");
+        registry.addMapping("/earthquakes/{id}").allowedOrigins("http://localhost:5173");
     }
 }
