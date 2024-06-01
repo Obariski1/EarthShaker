@@ -7,7 +7,7 @@
     <div class="filters">
       <div>
         <h2>Datum</h2>
-        <input class="date-field" type="date" v-model="dateFilter">
+        <input class="filter-input" type="date" v-model="dateFilter">
       </div>
 
       <div>
@@ -33,7 +33,7 @@
 
       <div>
         <h2>Stadt</h2>
-        <input class="city-filter-input" type="text" v-model="placeFilter" placeholder="Stadt eingeben ...">
+        <input class="filter-input" type="text" v-model="placeFilter" placeholder="Stadt eingeben ...">
       </div>
     </div>
     <div class="map">
@@ -53,8 +53,16 @@
         </GMapInfoWindow>
       </GMapMap>
     </div>
-    <div class="credits">
-      <p>@ Elias Elmer, Giovanni Palermo, Maël Cabon</p>
+
+    <div class="footer-box">
+      <div class="api-info">
+        <p>{{ titleApi }}</p>
+        <p>Verison Api: {{ verisonApi }} </p>
+        <p>Status Api: {{ statusApi }} </p>
+      </div>
+      <div class="credits">
+        <p>@ Elias Elmer, Giovanni Palermo, Maël Cabon</p>
+      </div>
     </div>
   </div>
 </template>
@@ -81,13 +89,32 @@ export default {
       selectedMarker: null,
       infoWindowOpened: false,
       formattedDate: null,
-      placeFilter: ''
+      placeFilter: '',
+      verisonApi: null,
+      statusApi: null,
+      titleApi: null,
     };
   },
   created() {
     axios.get('http://localhost:8082/earthquakes')
       .then(response => {
+        const statusMapping = {
+          200: 'OK',
+          201: 'Erstellt',
+          204: 'Kein Inhalt',
+          400: 'Schlechte Anfrage',
+          401: 'Nicht autorisiert',
+          403: 'Verboten',
+          404: 'Nicht gefunden',
+          500: 'Interner Serverfehler'
+        };
         this.earthquakeData = response.data;
+        console.log(response.data);
+        this.titleApi = response.data.metadata.title
+        this.verisonApi = response.data.metadata.api;
+        const statusCode = response.data.metadata.status;
+        const statusWord = statusMapping[statusCode] || response.data.metadata.status;
+        this.statusApi = statusWord;
         this.processEarthquakeData();
       })
       .catch(error => {
@@ -198,11 +225,7 @@ export default {
   border-radius: 15px;
 }
 
-.date-field {
-  background-color: rgba(231, 231, 231, 0.815);
-}
-
-.city-filter-input {
+.filter-input {
   border: 1px solid lightgray;
   border-radius: 6px;
 }
@@ -216,8 +239,16 @@ export default {
   justify-content: center;
 }
 
-.credits {
-  float: right;
-  margin-bottom: 25px
+.footer-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  margin-bottom: 25px;
+  gap: 20px;
+}
+
+.api-info {
+  background-color: rgba(231, 231, 231, 0.815);
+  padding: 20px;
+  border-radius: 15px;
 }
 </style>
