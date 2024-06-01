@@ -36,9 +36,6 @@
 <script>
 import axios from 'axios';
 import { ref, watch } from 'vue';
-import { lookUp } from 'geojson-places';
-const result = lookUp(41.652349, -4.728602);
-console.log(result);
 export default {
   name: 'App',
   data() {
@@ -86,7 +83,7 @@ export default {
           }
         }
 
-      
+
         if (this.tsunamiFilter && marker.tsunami !== 1) {
           return false;
         }
@@ -140,15 +137,7 @@ export default {
         });
       }
     },
-    async performReverseGeocoding() {
-    try {
-      const result = await lookUp(41.652349, -4.728602);
-      console.log(result);
-      // Handle the result here
-    } catch (error) {
-      console.error('Error performing reverse geocoding:', error);
-    }
-  }
+    
   }
 };
 </script>
