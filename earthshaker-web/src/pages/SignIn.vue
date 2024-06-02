@@ -11,10 +11,12 @@
     <br>
     <a href="/register">Keinen Account? Hier Registireren</a>
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useRouter } from 'vue-router'
+
 const email = ref("")
 const password = ref("")
 const router = useRouter()
@@ -24,7 +26,7 @@ const register = () => {
     signInWithEmailAndPassword(getAuth(), email.value, password.value)
         .then((data) => {
             console.log("Erfolgreich angemeldet");
-            router.push('/')
+            router.push('/home')
         })
         .catch((error) => {
             switch (error.code) {
@@ -47,7 +49,7 @@ const register = () => {
 const signInWIthGoogle = () => {
     const provider = new GoogleAuthProvider()
     signInWithPopup(getAuth(), provider).then((result) => {
-        router.push("/")
+        router.push("/home")
     })
 }
 </script>

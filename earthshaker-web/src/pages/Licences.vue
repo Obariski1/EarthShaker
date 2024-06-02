@@ -1,5 +1,7 @@
 <template>
-    <a href="/">Zurück zu Home</a>
+    <a href="/home">Zurück zu Home</a>
+    <br>
+    <hr />
     <br>
     <h2 class="title-licences">Lizenzen von Drittanbietern</h2>
     <br>

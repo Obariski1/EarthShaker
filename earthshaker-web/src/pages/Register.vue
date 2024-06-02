@@ -10,6 +10,7 @@
     <br>
     <a href="/sign-in">Hast du schon einen Account? Hier Anmelden</a>
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
@@ -23,14 +24,14 @@ const register = () => {
     createUserWithEmailAndPassword(getAuth(), email.value, password.value)
         .then((data) => {
             console.log("Erfolgreich Registriert");
-            router.push('/')
+            router.push('/home')
         })
 }
 
 const signInWIthGoogle = () => {
     const provider = new GoogleAuthProvider()
     signInWithPopup(getAuth(), provider).then((result) => {
-        router.push("/")
+        router.push("/home")
     })
 }
 </script>

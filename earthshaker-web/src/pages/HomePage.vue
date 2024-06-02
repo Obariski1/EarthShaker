@@ -69,6 +69,7 @@
 <script>
 import axios from 'axios';
 import { watch } from 'vue';
+
 export default {
   name: 'HomePage',
   data() {

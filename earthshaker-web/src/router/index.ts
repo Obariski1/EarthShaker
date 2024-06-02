@@ -5,12 +5,15 @@ import SignIn from '../pages/SignIn.vue'
 import Licences from '../pages/Licences.vue'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      redirect: '/sign-in'
+    },
+    {
+      path: '/home',
       name: 'home',
       component: HomePage,
       meta: {
