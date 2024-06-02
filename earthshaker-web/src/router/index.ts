@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../pages/HomePage.vue'
 import Register from '../pages/Register.vue'
 import SignIn from '../pages/SignIn.vue'
-import { getAuth } from 'firebase/auth'
+import Licences from '../pages/Licences.vue'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 
 const router = createRouter({
@@ -27,6 +28,14 @@ const router = createRouter({
       component: SignIn
     },
     {
+      path: '/licences',
+      name: 'licences',
+      component: Licences,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
@@ -34,9 +43,22 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const removeListener = onAuthStateChanged(
+      getAuth(),
+      (user) => {
+        removeListener()
+        resolve(user)
+      },
+      reject
+    )
+  })
+}
+
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (getAuth().currentUser) {
+    if (await getCurrentUser()) {
       next()
     } else {
       alert("Du hast keinen Zugang")

@@ -60,6 +60,9 @@
         <p>@ Elias Elmer, Giovanni Palermo, Maël Cabon</p>
       </div>
     </div>
+    <div class="licence-box">
+      <a href="/licences">Lizenzen von Drittanbietern</a>
+    </div>
   </div>
 </template>
 
@@ -245,5 +248,11 @@ export default {
 
 .title-api {
   font-weight: bold;
+}
+
+.licence-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 </style>
