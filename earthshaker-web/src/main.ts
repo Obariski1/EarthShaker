@@ -2,7 +2,7 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import VueGoogleMaps from '@fawmi/vue-google-maps';
 import App from './App.vue'
 import router from './router'
 // Import the functions you need from the SDKs you need
@@ -24,7 +24,6 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-import VueGoogleMaps from '@fawmi/vue-google-maps';
 const app = createApp(App)
 
 app.use(createPinia())

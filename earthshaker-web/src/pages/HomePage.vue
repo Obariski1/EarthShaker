@@ -37,8 +37,7 @@
       <GMapMap :center="center" :zoom="2" map-type-id="terrain" class="map">
         <GMapMarker :key="marker.id" v-for="marker in filteredMarkers" :position="marker.position"
           @click="fetchEarthquakeData(marker)" />
-        <GMapInfoWindow v-if="selectedMarker" :position="selectedMarker.position" :opened="infoWindowOpened"
-          @closeclick="infoWindowOpened = false">
+        <GMapInfoWindow v-if="selectedMarker" :position="selectedMarker.position" :opened="infoWindowOpened">
           <div>
             <h3 class="pop-up-title" v-if="earthquakeData">{{ earthquakeData.title }}</h3>
             <p v-if="earthquakeData">Stadt: {{ earthquakeData.place }}</p>
@@ -106,7 +105,6 @@ export default {
           500: 'Interner Serverfehler'
         };
         this.earthquakeData = response.data;
-        console.log(response.data);
         this.titleApi = response.data.metadata.title
         this.verisonApi = response.data.metadata.api;
         const statusCode = response.data.metadata.status;
@@ -114,9 +112,6 @@ export default {
         this.statusApi = statusWord;
         this.processEarthquakeData();
       })
-      .catch(error => {
-        console.error('Error fetching earthquake data:', error);
-      });
 
     watch(this.tsunamiFilter, (newVal) => {
       this.$forceUpdate();
@@ -184,21 +179,19 @@ export default {
       }
     },
     async fetchEarthquakeData(marker) {
+      this.infoWindowOpened = false;
       this.selectedMarker = marker;
+
+      const response = await axios.get(`http://localhost:8082/earthquakes/${marker.id}`);
+      this.earthquakeData = response.data.properties;
+
+      const timeStamp = this.earthquakeData.time;
+      const date = new Date(timeStamp)
+      const formatDate = date.toLocaleDateString();
+      this.formattedDate = formatDate
+
       this.infoWindowOpened = true;
-
-      try {
-        const response = await axios.get(`http://localhost:8082/earthquakes/${marker.id}`);
-        this.earthquakeData = response.data.properties;
-
-        const timeStamp = this.earthquakeData.time;
-        const date = new Date(timeStamp)
-        const formatDate = date.toLocaleDateString();
-        this.formattedDate = formatDate
-      } catch (error) {
-        console.error('Error fetching detailed earthquake data:', error);
-      }
-    }
+    },
   }
 };
 </script>
