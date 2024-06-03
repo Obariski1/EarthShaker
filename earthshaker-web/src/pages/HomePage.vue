@@ -29,8 +29,8 @@
       </div>
 
       <div>
-        <h2>Stadt</h2>
-        <input class="filter-input" type="text" v-model="placeFilter" placeholder="Stadt eingeben ...">
+        <h2>Stadt/Land</h2>
+        <input class="filter-input" type="text" v-model="placeFilter" placeholder="Stadt/Land eingeben ...">
       </div>
     </div>
     <div class="map-box">
@@ -53,7 +53,7 @@
     <div class="footer-box">
       <div class="api-info">
         <p class="title-api">{{ titleApi }}</p>
-        <p>Verison Api: {{ verisonApi }} </p>
+        <p>Version Api: {{ verisonApi }} </p>
         <p>Status Api: {{ statusApi }} </p>
       </div>
       <div>
